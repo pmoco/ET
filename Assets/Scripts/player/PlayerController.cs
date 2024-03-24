@@ -23,13 +23,17 @@ public enum FlashState
     
     public FlashState flashState = FlashState.Standby;
 
-    float flashTimer; 
-
+  
     public float flashAnimationTime ;
 
     public GameObject flash; 
     
- public float FLASHLIGHT_OFFSET =90f;
+    public float FLASHLIGHT_OFFSET =90f;
+
+    public float reloadTime = 2f;
+
+    public float flashTimer;
+
 
     Rigidbody2D rb; 
 
@@ -67,7 +71,10 @@ public enum FlashState
            Flash ();
 
         }
-        
+        if (flashState== FlashState.Reloading)
+        {
+            Reloading ();
+        }
 
 
     }
@@ -110,6 +117,17 @@ public enum FlashState
         }
     }
 
+    void Reloading()
+    {
+        flashTimer += Time.deltaTime;
+        if (flashTimer >= reloadTime)
+        {
+            flashTimer = 0;
+            flashState = FlashState.Standby;
+        }
+    }
+
+
 
     void Flash ( ){
 
@@ -117,18 +135,25 @@ public enum FlashState
 
 
         if (flashTimer < flashAnimationTime ){
+
              flash.SetActive(true);
 
 
         }else{
-            flashState = FlashState.Standby ; 
+            flashTimer = 0;
+            flashState = FlashState.Reloading ; 
             flash.SetActive(false);
 
         }
 
     }
 
-   
+
+
+
+
+
+
     public void toggleActive(){
         if (isActive){
             isActive=false;

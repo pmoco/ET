@@ -35,7 +35,7 @@ public class PopupText : MonoBehaviour
 
     public void PopUpTimeout(int messageId =0 ){
         showText =true;
-        timer = 0f;
+        timer =0f;
         popUp(messageId);
     }
     public void popUp(int messageId = 0)
