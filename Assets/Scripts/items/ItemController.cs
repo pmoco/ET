@@ -22,7 +22,7 @@ public class ItemController : MonoBehaviour
     
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
         {
             // Check if the player enters the trigger area
             if (collision.CompareTag("Player"))
@@ -32,7 +32,7 @@ public class ItemController : MonoBehaviour
         }
 
     
-    private void OnTriggerExit2D(Collider2D collision)
+    protected virtual void OnTriggerExit2D(Collider2D collision)
         {
             // Check if the player exits the trigger area
             if (collision.CompareTag("Player"))

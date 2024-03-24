@@ -14,6 +14,8 @@ public class switchOpenDoor : MonoBehaviour
     [SerializeField] InventoryManager.AllItems requiredItem ;
 
 
+
+
     
     // Start is called before the first frame update
     void Start()
@@ -43,6 +45,9 @@ public class switchOpenDoor : MonoBehaviour
 
                     }
                     _isDoorOpen =true;
+                }else{
+                    this.GetComponent<PopupText>().PopUpTimeout(0);
+                    
                 }
                 
 
