@@ -9,6 +9,8 @@ public class ItemPickup : ItemController
 
     bool toDestroy = false;
 
+    public bool ItemDestroy = true ;
+    public bool toBackpack = false ;
 
     // Start is called before the first frame update
     void Start()
@@ -32,16 +34,27 @@ public class ItemPickup : ItemController
             audioSource.Play();
 
 
-            //UIManager.Instance.console.Show("Picked Up " + ItemName);
+            UIManager.Instance.ConsoleShow("Picked Up " + ItemName);
 
-            Add();
+            Add(toBackpack);        
+            
+            
+            
+            if (ItemDestroy)
+            {
+                toDestroy = ItemDestroy;
+                gameObject.GetComponent<PopupText>().popOut();
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            }
+            else
+            {
+                gameObject.GetComponent<PopupText>().popOut();
+                gameObject.GetComponent<FlashTrigger>().enabled = false;
+                gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                gameObject.GetComponent<PopupText>().enabled = false;
+            }
 
             
-
-            toDestroy = true; 
-
-            gameObject.GetComponent<PopupText>().popOut();
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
         }
 

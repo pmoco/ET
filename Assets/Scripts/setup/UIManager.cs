@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static InventoryManager;
 
 public class UIManager : MonoBehaviour
@@ -18,7 +19,7 @@ public class UIManager : MonoBehaviour
     {
         Instance = this;
 
-        Instance.console= GetComponentInChildren<ConsoleLogger>();
+        Instance.console = console;
         Instance.backPack = backPack;
 
     }
@@ -29,6 +30,12 @@ public class UIManager : MonoBehaviour
         
     }
 
+
+    public void ConsoleShow(string text)
+    {
+
+        console.Show(text);
+    }
 
     public void UpdateBackpack(List<AllItems> inventory)
 

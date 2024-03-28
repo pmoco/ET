@@ -39,8 +39,10 @@ public class EnemyController : MonoBehaviour
 
 
 
+    Animator anim;
 
 
+    public Collider2D attackCollider;
 
     void Start()
     {
@@ -48,7 +50,7 @@ public class EnemyController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         ai =  gameObject.GetComponent<AIPath>();
         ai.maxSpeed = maxSpeed;
-
+        anim = GetComponent<Animator>();
         obstacleLayer = LayerMask.GetMask("obstacle");
     }
 
@@ -81,7 +83,22 @@ public class EnemyController : MonoBehaviour
         {
             Attack();
             canAttack = false;
-            Invoke("ResetAttackCooldown", attackCooldown);
+
+            AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+
+            if (stateInfo.IsName("Attack_done"))
+            {
+                attackCollider.enabled = true;
+
+
+            }
+            else if (stateInfo.IsName("Movin"))
+            {
+                attackCollider.enabled = false ;
+                Invoke("ResetAttackCooldown", attackCooldown);
+            }
+
+                
 
         }
 
@@ -161,9 +178,11 @@ public class EnemyController : MonoBehaviour
 
     void Attack()
     {
-        Debug.LogWarning("Enemy attacks!");
+        anim.SetTrigger("attack");
 
-        
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+
+
 
         Debug.LogWarning(ai.velocity);
         // Add attack behavior here, such as reducing player health

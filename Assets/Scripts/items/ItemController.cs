@@ -16,9 +16,10 @@ public class ItemController : MonoBehaviour
     public bool isPlayerInside; 
 
 
-    public bool  Add(){
+    public bool  Add(bool toBackPack= true )
+    {
 
-        return InventoryManager.Instance.AddItem(itemType);
+        return InventoryManager.Instance.AddItem(itemType, toBackPack);
     
     }
 

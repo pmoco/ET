@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 1003666350352233514}
   - component: {fileID: 8199625373930637444}
   - component: {fileID: 3529935669686429075}
-  - component: {fileID: 7469881743942382812}
-  - component: {fileID: 7031412619574858879}
+  - component: {fileID: 64275326112125466}
   m_Layer: 0
   m_Name: two side door
   m_TagString: Untagged
@@ -100,7 +99,7 @@ MonoBehaviour:
   - {fileID: 2163932075597664845}
   _isDoorOpen: 0
   requiredItem: 1
---- !u!114 &7469881743942382812
+--- !u!114 &64275326112125466
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,25 +108,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1745551691281532407}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3b9329c52a401e408b1a504e59954b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 7921376018117532497}
-  player: {fileID: 0}
---- !u!114 &7031412619574858879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745551691281532407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18b3db65bb3cd094e9843ede8d12eeb6, type: 3}
+  m_Script: {fileID: 11500000, guid: 0586c7e28fb931e489167956499ecbc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   messages:
-  - Locked! - requires key
+  - Locked - Require Office Keys
   text: {fileID: 0}
   offset: {x: 0, y: 2, z: 0}
 --- !u!1 &2653143918702076539
@@ -394,7 +379,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 57256
+  m_InstanceId: 54314
   m_LocalBounds:
     m_Center: {x: 0, y: 0.00000023841858, z: 0}
     m_Extent: {x: 0.5, y: 0.50000024, z: 0}
@@ -662,7 +647,7 @@ MonoBehaviour:
   - {x: 0.49999997, y: -0.5000005, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 57252
+  m_InstanceId: 54310
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000023841858, z: 0}
     m_Extent: {x: 0.5, y: 0.50000024, z: 0}

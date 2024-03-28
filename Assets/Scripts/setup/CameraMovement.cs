@@ -51,7 +51,6 @@ public class CameraFollow : MonoBehaviour
             
             transform.position = smoothedPosition;
 
-            Debug.LogWarning("want" + desiredPosition +  "lerp "+ smoothedPosition + "current "+ transform.position);
 
         }
     }

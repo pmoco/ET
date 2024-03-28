@@ -20,7 +20,7 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    public bool AddItem (AllItems item){
+    public bool AddItem (AllItems item, bool toBackPack =  false){
 
         if ( _inventoryItems.Contains(item) ) // if item exists  just return false
         {
@@ -29,7 +29,11 @@ public class InventoryManager : MonoBehaviour
             // if the item isnt in the inventory, Add Item ,  return true 
             _inventoryItems.Add(item);
 
-            UIManager.Instance.UpdateBackpack(_inventoryItems);
+            if (toBackPack)
+            {
+                UIManager.Instance.UpdateBackpack(_inventoryItems);
+            }
+            
 
 
             return true;
@@ -45,7 +49,9 @@ public class InventoryManager : MonoBehaviour
 
         OfficeKey,
         
-        Camera
+        Camera,
+
+        jujuBeads
 
     }
 
