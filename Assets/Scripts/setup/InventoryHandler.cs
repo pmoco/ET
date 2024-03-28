@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using static InventoryManager;
 using System.Linq;
-using TMPro; // Import LINQ namespace
+using TMPro;
+using UnityEngine.UI; // Import LINQ namespace
 
 
 public class InventoryHandler : MonoBehaviour
@@ -15,6 +16,8 @@ public class InventoryHandler : MonoBehaviour
     public List<AllItems> _inventoryItems;
 
     public TMP_Text attempt;
+
+    public Button NextAttempt; 
 
     [Serializable]
     public struct ItemTuple
@@ -60,6 +63,8 @@ public class InventoryHandler : MonoBehaviour
         attempt.SetText("Attempt #" + GameManager.Instance.attempt);
         _inventoryItems = InventoryManager.Instance._inventoryItems;
         Show();
+
+        NextAttempt.onClick.AddListener(GameManager.Instance.StartGame);
     }
     
 
@@ -90,7 +95,7 @@ public class InventoryHandler : MonoBehaviour
             current.SetActive(true);
         }
 
-
+        UpdatePageNumber(currentItem, totalItems);
     }
 
     public void prevItem()
@@ -111,7 +116,7 @@ public class InventoryHandler : MonoBehaviour
         {
             current.SetActive(true);
         }
-
+        UpdatePageNumber(currentItem, totalItems);
     }
 
     public void Show()

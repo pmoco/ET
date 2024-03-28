@@ -965,7 +965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d62f58755ca671f43b9c7588e808c5c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoryItems: 0200000001000000
+  _inventoryItems: 02000000
 --- !u!1 &992701726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,6 +1323,7 @@ MonoBehaviour:
   GameTimer: 0
   warning1: 60
   warningMayhem: 180
+  BackPackContent: BackPack <br>   _ Camera
   State: 0
   PopUpPrefab: {fileID: 486360988139357150, guid: 84b0af7fb60abba479b4d0e8b2a3b358, type: 3}
 --- !u!1 &1161684715
@@ -2370,6 +2371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inventoryItems: 
   attempt: {fileID: 1087154881}
+  NextAttempt: {fileID: 1172564943}
   connections:
   - item: 0
     gameObject: {fileID: 1793390086}

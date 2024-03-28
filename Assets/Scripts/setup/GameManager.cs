@@ -124,6 +124,8 @@ public class GameManager : MonoBehaviour
     {
         BackPackContent = UIManager.Instance.backPack.GetComponent<TMP_Text>().text;
 
+        attempt++;
+
         State = GameState.Menu;
         SceneManager.LoadScene("Menu");
 
