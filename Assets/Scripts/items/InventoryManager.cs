@@ -5,10 +5,11 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
    
-    public static InventoryManager Instance ; 
+    public static InventoryManager Instance ;
 
-    public List<AllItems> _inventoryItems =  new List<AllItems>();  // Picked up Items 
 
+    public  List<AllItems> _inventoryItems =  new List<AllItems>();  // Picked up Items 
+    List<AllItems> _prevItems = new List<AllItems>();
 
 
     /// <summary>
@@ -16,8 +17,18 @@ public class InventoryManager : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        Instance =  this; 
+        // Ensure only one instance of DataHolder exists
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
 
+            _prevItems =  _inventoryItems;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public bool AddItem (AllItems item, bool toBackPack =  false){
@@ -31,7 +42,7 @@ public class InventoryManager : MonoBehaviour
 
             if (toBackPack)
             {
-                UIManager.Instance.UpdateBackpack(_inventoryItems);
+                UIManager.Instance.UpdateBackpack(item);
             }
             
 
@@ -51,7 +62,8 @@ public class InventoryManager : MonoBehaviour
         
         Camera,
 
-        jujuBeads
+        jujuBeads, 
+        None
 
     }
 
@@ -62,6 +74,20 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+
+    public void FailedRun()
+    {
+
+        _inventoryItems = _prevItems;
+    }
+
+
+    public void SuccessRun()
+    {
+
+        _prevItems = _inventoryItems;
+
+    }
 
 
 }

@@ -12,6 +12,8 @@ public class EnemyController : MonoBehaviour
     private bool canAttack = true; // Flag to control attack cooldown
 
 
+    public GameObject deathScreen;
+
 
     public enum EnemyStatus
     {
@@ -114,7 +116,6 @@ public class EnemyController : MonoBehaviour
     void tryAttacking()
     {
 
-        Debug.LogWarning("TRY path is clear :" + IsPathClear());
 
         // Attack the player if cooldown is over
         if (canAttack && IsPathClear())
@@ -184,7 +185,7 @@ public class EnemyController : MonoBehaviour
 
 
 
-        Debug.LogWarning(ai.velocity);
+       
         // Add attack behavior here, such as reducing player health
     }
 
@@ -196,6 +197,20 @@ public class EnemyController : MonoBehaviour
 
 
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        // Check if the player enters the trigger area
+        if (collision.CompareTag("Player"))
+        {
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+
+            player.movSpeed = 0;
+
+            GameManager.Instance.DeathScreen();
+        }
+    }
 
 
 }

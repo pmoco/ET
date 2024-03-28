@@ -10,7 +10,7 @@ public class ItemPickup : ItemController
     bool toDestroy = false;
 
     public bool ItemDestroy = true ;
-    public bool toBackpack = false ;
+    public bool toBackpack = true ;
 
     // Start is called before the first frame update
     void Start()

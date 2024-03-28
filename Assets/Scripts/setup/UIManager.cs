@@ -13,6 +13,15 @@ public class UIManager : MonoBehaviour
     public ConsoleLogger console;
 
     public GameObject backPack;
+    public GameObject deathScreen;
+    public GameObject runScreen;
+
+
+
+
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +30,11 @@ public class UIManager : MonoBehaviour
 
         Instance.console = console;
         Instance.backPack = backPack;
+        Instance.deathScreen = deathScreen;
+        Instance.runScreen = runScreen; 
 
+
+        backPack.GetComponent<TMP_Text>().SetText(GameManager.Instance.BackPackContent);
     }
 
     // Update is called once per frame
@@ -37,16 +50,13 @@ public class UIManager : MonoBehaviour
         console.Show(text);
     }
 
-    public void UpdateBackpack(List<AllItems> inventory)
+    public void UpdateBackpack(AllItems item)
 
     {
-        string text = "Backpack : <br>";
+        string text = backPack.GetComponent<TMP_Text>().text;
 
-        foreach (AllItems item in inventory)
-        {
-            text += " _ "+item.ToString() +  "<br>";
+        text += "<br>   _ " + item.ToString() +  "<br>";
 
-        }
 
         Debug.LogWarning(text);
 
@@ -54,4 +64,18 @@ public class UIManager : MonoBehaviour
 
         backPack.GetComponent<TMP_Text>().SetText( text);   
     }
+
+
+    public void DeathScreen()
+    {
+
+        deathScreen.SetActive(true);
+    }
+
+    public void SuccessScreen()
+    {
+
+        runScreen.SetActive(true);
+    }
+
 }

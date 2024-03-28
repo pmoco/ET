@@ -45,7 +45,7 @@ public class PopupText : MonoBehaviour
         Vector3  spawnPos  = this.transform.position +  offset; 
 
 
-            GameObject popup = Instantiate (GameManager.i.PopUpPrefab,spawnPos, Quaternion.identity);
+            GameObject popup = Instantiate (GameManager.Instance.PopUpPrefab,spawnPos, Quaternion.identity);
 
             text=  popup.GetComponent<TextMeshPro>();
             if (messages.Count != 0)  text.SetText(messages[messageId]);
