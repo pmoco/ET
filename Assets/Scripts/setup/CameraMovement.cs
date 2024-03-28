@@ -42,11 +42,17 @@ public class CameraFollow : MonoBehaviour
             // Clamp camera's position within defined bounds
             float clampedX = Mathf.Clamp(desiredPosition.x, minX, maxX);
             float clampedY = Mathf.Clamp(desiredPosition.y, minY, maxY);
-            desiredPosition = new Vector3(clampedX, clampedY, this.transform.position.z);
+            desiredPosition = new Vector3(desiredPosition.x, desiredPosition.y, this.transform.position.z);
 
             // Smoothly move the camera towards the desired position
+
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+
+            
             transform.position = smoothedPosition;
+
+            Debug.LogWarning("want" + desiredPosition +  "lerp "+ smoothedPosition + "current "+ transform.position);
+
         }
     }
 }

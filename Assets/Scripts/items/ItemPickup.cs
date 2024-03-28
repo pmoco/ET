@@ -31,7 +31,12 @@ public class ItemPickup : ItemController
 
             audioSource.Play();
 
+
+            //UIManager.Instance.console.Show("Picked Up " + ItemName);
+
             Add();
+
+            
 
             toDestroy = true; 
 

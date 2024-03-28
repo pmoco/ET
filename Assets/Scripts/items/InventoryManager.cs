@@ -17,6 +17,7 @@ public class InventoryManager : MonoBehaviour
     void Awake()
     {
         Instance =  this; 
+
     }
 
     public bool AddItem (AllItems item){
@@ -27,6 +28,10 @@ public class InventoryManager : MonoBehaviour
         }else{
             // if the item isnt in the inventory, Add Item ,  return true 
             _inventoryItems.Add(item);
+
+            UIManager.Instance.UpdateBackpack(_inventoryItems);
+
+
             return true;
         }
 

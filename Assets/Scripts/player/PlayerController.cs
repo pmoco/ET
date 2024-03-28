@@ -35,14 +35,17 @@ public enum FlashState
     public float flashTimer;
 
 
-    Rigidbody2D rb; 
+    Rigidbody2D rb;
 
+    Animator anim; 
 
     
         // Start is called before the first frame update
     void Start()
     {
         rb= GetComponent<Rigidbody2D>();
+
+        anim = GetComponent<Animator>();
 
         flashState = FlashState.Standby;
     }
@@ -114,6 +117,47 @@ public enum FlashState
 
 
             rb.velocity = movement.normalized * movSpeed;
+
+
+            
+               
+            
+
+
+            if (speedY > 0)
+            {
+
+                anim.SetBool("movUp", true);
+                anim.SetBool("movDown", false);
+            }
+            else if (speedY < 0) 
+            {
+                anim.SetBool("movUp", false);
+                anim.SetBool("movDown", true);
+
+            }else if (speedX < 0)
+            {
+                anim.SetBool("movUp", false);
+                anim.SetBool("movDown", false);
+                anim.SetBool("movLeft", true);
+                anim.SetBool("movRight", false);
+            }
+            else if (speedX > 0)
+            {
+                anim.SetBool("movUp", false);
+                anim.SetBool("movDown", false);
+                anim.SetBool("movLeft", false);
+                anim.SetBool("movRight", true);
+            }
+            else
+            {
+                anim.SetBool("movUp", false);
+                anim.SetBool("movDown", false);
+                anim.SetBool("movLeft", false);
+                anim.SetBool("movRight", false);
+            }
+
+
         }
     }
 
@@ -162,5 +206,15 @@ public enum FlashState
             isActive=true;
         }
 
+    }
+
+
+    public static float MapValue(float value, float inputMin, float inputMax, float outputMin, float outputMax)
+    {
+        // Ensure the input value is within the input range
+        value = Mathf.Clamp(value, inputMin, inputMax);
+
+        // Map the input value from the input range to the output range
+        return outputMin + (value - inputMin) * (outputMax - outputMin) / (inputMax - inputMin);
     }
 }
