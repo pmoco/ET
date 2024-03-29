@@ -62,7 +62,9 @@ public class InventoryManager : MonoBehaviour
         
         Camera,
 
-        jujuBeads, 
+        jujuBeads,
+
+        Bingus,
         None
 
     }

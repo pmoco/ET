@@ -95,10 +95,15 @@ public class GameManager : MonoBehaviour
 
 
 
-        State = GameState.Early;
+        //State = GameState.Early;
         SceneManager.LoadScene("SampleScene");
 
-        
+        if (State == GameState.Menu)
+        {
+            State = GameState.Early;
+
+            inRun = true;
+        }
     }
 
 
@@ -129,7 +134,8 @@ public class GameManager : MonoBehaviour
         State = GameState.Menu;
         SceneManager.LoadScene("Menu");
 
-
+        inRun = false;
+        GameTimer = 0;
     }
 
 
