@@ -9,7 +9,7 @@ public class InventoryManager : MonoBehaviour
 
 
     public  List<AllItems> _inventoryItems =  new List<AllItems>();  // Picked up Items 
-    List<AllItems> _prevItems = new List<AllItems>();
+    public List<AllItems> _prevItems = new List<AllItems>();
 
 
     /// <summary>
@@ -23,7 +23,11 @@ public class InventoryManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            _prevItems =  _inventoryItems;
+
+            UpdateAfromB(_prevItems, _inventoryItems);
+
+
+
         }
         else
         {
@@ -78,16 +82,33 @@ public class InventoryManager : MonoBehaviour
     public void FailedRun()
     {
 
-        _inventoryItems = _prevItems;
+        UpdateAfromB( _inventoryItems, _prevItems);
+
     }
 
 
     public void SuccessRun()
     {
 
-        _prevItems = _inventoryItems;
+         UpdateAfromB(_prevItems, _inventoryItems);
+
 
     }
 
+
+
+    public void UpdateAfromB (List<AllItems > A ,  List<AllItems> B)
+    {
+
+        A.Clear();
+
+        foreach (AllItems i in B)
+        {
+
+            A.Add(i);
+        }
+
+
+    }
 
 }

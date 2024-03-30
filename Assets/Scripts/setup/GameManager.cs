@@ -36,6 +36,15 @@ public class GameManager : MonoBehaviour
     public GameState State = GameState.Menu;
 
 
+    public float SpawnIntensity1  = 10f ;
+
+    public float SpawnIntensity2 = 8f;
+
+    public float MaxSpawnIntensity = 3f;
+
+    public float TimeToMaxSpawn = 60f;
+
+    public SpawnerControler spawner ;
 
     void Awake()
     {
@@ -54,6 +63,8 @@ public class GameManager : MonoBehaviour
 
     public void DeathScreen()
     {
+        inRun = false;
+
         UIManager.Instance.DeathScreen();
         InventoryManager.Instance.FailedRun();
 
@@ -61,6 +72,7 @@ public class GameManager : MonoBehaviour
 
     public void SuccessScreen()
     {
+        inRun = false;
         UIManager.Instance.SuccessScreen();
         InventoryManager.Instance.SuccessRun();
     }
@@ -76,9 +88,13 @@ public class GameManager : MonoBehaviour
 
             if (GameTimer < warning1)
             {
-                StartPhase2();
+                // do nothing
 
             }else if(GameTimer > warning1 && GameTimer < warningMayhem){
+                StartPhase2();
+            }
+            else if  (GameTimer > warningMayhem)
+            {
                 StartMayhem();
             }
 
@@ -94,11 +110,15 @@ public class GameManager : MonoBehaviour
     public void StartGame() { 
 
 
-
-        State = GameState.Early;
         SceneManager.LoadScene("SampleScene");
 
-        
+        if (State == GameState.Menu)
+        {
+            State = GameState.Early;
+
+            inRun = true;
+        }
+
     }
 
 
@@ -109,6 +129,14 @@ public class GameManager : MonoBehaviour
         if (State == GameState.Early)
         {
             State = GameState.Mid;
+
+            spawner = SpawnerControler.Instance;
+
+            spawner.isSpawning = true;
+
+            spawner.spawnTimer = SpawnIntensity1; 
+
+
         }
     }
 
@@ -118,6 +146,14 @@ public class GameManager : MonoBehaviour
         {
             State = GameState.Late;
         }
+
+        float t = Mathf.Clamp01(GameTimer- warningMayhem / TimeToMaxSpawn);
+
+        // Map the interpolation factor to interpolate between startValue and endValue
+        float currentValue = Mathf.Lerp(SpawnIntensity2, MaxSpawnIntensity, t);
+
+
+        spawner.spawnTimer = currentValue;
     }
 
     public void BackToMenu()
