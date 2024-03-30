@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:Assets/Audio Assets/Player/Footsteps.wav.meta
 guid: 2595d86bfef1cdb4ab795cce6cb1f4e9
+========
+guid: 4ac64fcd7a2e9784b9fe98e66f5b90c5
+>>>>>>>> Stashed changes:Assets/Audio Assets/Player/Sound Effects/Camera_Flash.wav.meta
 AudioImporter:
   externalObjects: {}
   serializedVersion: 7
