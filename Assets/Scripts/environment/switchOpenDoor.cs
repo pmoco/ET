@@ -13,10 +13,10 @@ public class switchOpenDoor : MonoBehaviour
 
     [SerializeField] InventoryManager.AllItems requiredItem ;
 
+    //le door sound (Cavaleiro)
+    private AudioSource audioSource;
 
 
-
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +34,9 @@ public class switchOpenDoor : MonoBehaviour
 
                     door.Close();
 
+                    audioSource = GetComponent<AudioSource>();
+
+                    audioSource.Play();
                 }
                 _isDoorOpen =false;
             }else{
@@ -43,6 +46,9 @@ public class switchOpenDoor : MonoBehaviour
 
                         door.Open();
 
+                        audioSource = GetComponent<AudioSource>();
+
+                        audioSource.Play();
                     }
                     _isDoorOpen =true;
                 }else{

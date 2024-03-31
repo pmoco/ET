@@ -34,6 +34,7 @@ public enum FlashState
 
     public float flashTimer;
 
+    private AudioSource audioSource;
 
     Rigidbody2D rb;
 
@@ -119,9 +120,11 @@ public enum FlashState
             rb.velocity = movement.normalized * movSpeed;
 
 
-            
-               
-            
+
+            audioSource = GetComponent<AudioSource>();
+
+            audioSource.Play();
+
 
 
             if (speedY > 0)
@@ -182,8 +185,12 @@ public enum FlashState
 
              flash.SetActive(true);
 
+            audioSource = GetComponent<AudioSource>();
 
-        }else{
+            audioSource.Play();
+
+        }
+        else{
             flashTimer = 0;
             flashState = FlashState.Reloading ; 
             flash.SetActive(false);
