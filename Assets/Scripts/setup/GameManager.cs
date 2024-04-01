@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         if (State == GameState.Menu)
         {
             State = GameState.Early;
-
+ MapReloader.Instance.Show();
             inRun = true;
         }
     }
@@ -130,6 +130,8 @@ public class GameManager : MonoBehaviour
         BackPackContent = UIManager.Instance.backPack.GetComponent<TMP_Text>().text;
 
         attempt++;
+
+        MapReloader.Instance.Hide();
 
         State = GameState.Menu;
         SceneManager.LoadScene("Menu");
