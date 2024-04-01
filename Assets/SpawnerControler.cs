@@ -74,8 +74,9 @@ public class SpawnerControler : MonoBehaviour
         Transform spawnPoint = spawners[randomIndex];
 
         // Spawn an enemy at the chosen spawner
-        Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+        GameObject en = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
 
+        GameManager.Instance.enemies.Add(en.GetComponent<EnemyController>());
 
     }
 }

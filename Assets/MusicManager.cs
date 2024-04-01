@@ -6,6 +6,28 @@ public class MusicManager : MonoBehaviour
     private AudioSource audioSource; // Reference to the AudioSource component
     public int currentTrackIndex = 0; // Index of the currently playing track
 
+
+
+    public static MusicManager Instance;
+
+    void Awake()
+    {
+        // Ensure only one instance of DataHolder exists
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+
+            // Get a reference to the MusicManager component
+         
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {

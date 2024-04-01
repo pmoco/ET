@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
         musicManager = FindObjectOfType<MusicManager>();
     }
 
+
+    public List<EnemyController> enemies = new List<EnemyController> (); 
+
+
     // Method to play the next track
     public void PlayNextTrack()
     {
@@ -70,6 +74,12 @@ public class GameManager : MonoBehaviour
 
     public float TimeToMaxSpawn = 60f;
 
+    public float maxSpeedStg1 = 2f;
+    public float maxSpeedStg2 = 3f;
+    public float maxSpeedMayhem = 5f;
+    
+    
+
     public SpawnerControler spawner ;
 
     void Awake()
@@ -80,8 +90,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            // Get a reference to the MusicManager component
-            musicManager = FindObjectOfType<MusicManager>();
+
         }
         else
         {
@@ -148,9 +157,13 @@ public class GameManager : MonoBehaviour
 
         if (State == GameState.Menu)
         {
+            enemies.Clear();
             State = GameState.Early;
+            if (MapReloader.Instance != null)
+            {
 
- MapReloader.Instance.Show();
+                MapReloader.Instance.Show();
+            }
             inRun = true;
         }
 
@@ -171,6 +184,7 @@ public class GameManager : MonoBehaviour
 
             spawner.spawnTimer = SpawnIntensity1; 
 
+            UpdateEnemySpeed(maxSpeedStg1);
 
         }
     }
@@ -186,9 +200,11 @@ public class GameManager : MonoBehaviour
 
         // Map the interpolation factor to interpolate between startValue and endValue
         float currentValue = Mathf.Lerp(SpawnIntensity2, MaxSpawnIntensity, t);
-
+        float maxSpeed =  Mathf.Lerp(maxSpeedStg2,maxSpeedMayhem,t);
 
         spawner.spawnTimer = currentValue;
+
+        UpdateEnemySpeed(maxSpeed);
     }
 
     public void BackToMenu()
@@ -205,6 +221,18 @@ public class GameManager : MonoBehaviour
         inRun = false;
         GameTimer = 0;
     }
+
+
+    public void UpdateEnemySpeed(float speed){
+      
+        foreach (EnemyController en in enemies){
+            en.maxSpeed =speed;
+        }
+
+    
+
+    }
+
 
 
 
