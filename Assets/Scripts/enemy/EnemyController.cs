@@ -11,6 +11,11 @@ public class EnemyController : MonoBehaviour
     private Transform player; // Reference to the player's transform
     private bool canAttack = true; // Flag to control attack cooldown
 
+    public AudioSource loopSource; // AudioSource for looped audio
+    public AudioSource oneShotSource; // AudioSource for one-shot sound effects
+
+    public AudioClip loopClip; // AudioClip for the looped audio
+    public AudioClip soundEffectClip; // AudioClip for one-shot sound effects
 
     public GameObject deathScreen;
 
@@ -53,6 +58,10 @@ public class EnemyController : MonoBehaviour
 
         GetComponent<AIDestinationSetter>().target = player;
 
+        if (!loopSource.isPlaying)
+        {
+            loopSource.Play();
+        }
 
         ai =  gameObject.GetComponent<AIPath>();
         ai.maxSpeed = maxSpeed;
@@ -212,7 +221,13 @@ public class EnemyController : MonoBehaviour
 
             player.movSpeed = 0;
 
+            loopSource.Stop();
+
+            oneShotSource.PlayOneShot(soundEffectClip);
+
             GameManager.Instance.DeathScreen();
+
+
         }
     }
 
