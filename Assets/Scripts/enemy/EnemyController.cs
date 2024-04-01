@@ -11,6 +11,11 @@ public class EnemyController : MonoBehaviour
     private Transform player; // Reference to the player's transform
     private bool canAttack = true; // Flag to control attack cooldown
 
+    public AudioSource loopSource; // AudioSource for looped audio
+    public AudioSource oneShotSource; // AudioSource for one-shot sound effects
+
+    public AudioClip loopClip; // AudioClip for the looped audio
+    public AudioClip soundEffectClip; // AudioClip for one-shot sound effects
 
     public GameObject deathScreen;
 
@@ -50,10 +55,20 @@ public class EnemyController : MonoBehaviour
     {
         // Find the player object using a tag
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        GetComponent<AIDestinationSetter>().target = player;
+
+        if (!loopSource.isPlaying)
+        {
+            loopSource.Play();
+        }
+
         ai =  gameObject.GetComponent<AIPath>();
         ai.maxSpeed = maxSpeed;
         anim = GetComponent<Animator>();
         obstacleLayer = LayerMask.GetMask("obstacle");
+
+        attackCollider = GetComponent<PolygonCollider2D>();
     }
 
     void Update()
@@ -88,16 +103,19 @@ public class EnemyController : MonoBehaviour
 
             AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 
+            //Debug.LogWarning(stateInfo);
+
             if (stateInfo.IsName("Attack_done"))
             {
                 attackCollider.enabled = true;
 
-
             }
             else if (stateInfo.IsName("Movin"))
             {
+                
                 attackCollider.enabled = false ;
                 Invoke("ResetAttackCooldown", attackCooldown);
+                
             }
 
                 
@@ -120,9 +138,9 @@ public class EnemyController : MonoBehaviour
         // Attack the player if cooldown is over
         if (canAttack && IsPathClear())
         {
-            ai.maxSpeed = 0f;
+            ai.maxSpeed = 1f;
 
-            if (ai.velocity.magnitude < 0.15f)
+            if (ai.velocity.magnitude < 1.15f)
             {
                 enemyStatus = EnemyStatus.Attack;
                 
@@ -179,6 +197,7 @@ public class EnemyController : MonoBehaviour
 
     void Attack()
     {
+
         anim.SetTrigger("attack");
 
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
@@ -193,6 +212,7 @@ public class EnemyController : MonoBehaviour
     {
         canAttack = true;
         ai.maxSpeed = maxSpeed;
+        enemyStatus = EnemyStatus.ChasingEnemy;
     }
 
 
@@ -208,7 +228,13 @@ public class EnemyController : MonoBehaviour
 
             player.movSpeed = 0;
 
+            loopSource.Stop();
+
+            oneShotSource.PlayOneShot(soundEffectClip);
+
             GameManager.Instance.DeathScreen();
+
+
         }
     }
 

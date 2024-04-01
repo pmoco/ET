@@ -9,6 +9,36 @@ public class GameManager : MonoBehaviour
 
     public static GameManager  Instance ;
 
+    private MusicManager musicManager; // Reference to the MusicManager component
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // Get a reference to the MusicManager component
+        musicManager = FindObjectOfType<MusicManager>();
+    }
+
+
+    public List<EnemyController> enemies = new List<EnemyController> (); 
+
+
+    // Method to play the next track
+    public void PlayNextTrack()
+    {
+        if (musicManager != null)
+        {
+            // Determine the index of the next track
+            int nextTrackIndex = (musicManager.currentTrackIndex + 1) % musicManager.musicTracks.Length;
+            
+            // Play the next track
+            musicManager.PlayMusicTrack(nextTrackIndex);
+        }
+        else
+        {
+            Debug.LogWarning("MusicManager not found!");
+        }
+    }
+
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -36,6 +66,21 @@ public class GameManager : MonoBehaviour
     public GameState State = GameState.Menu;
 
 
+    public float SpawnIntensity1  = 10f ;
+
+    public float SpawnIntensity2 = 8f;
+
+    public float MaxSpawnIntensity = 3f;
+
+    public float TimeToMaxSpawn = 60f;
+
+    public float maxSpeedStg1 = 2f;
+    public float maxSpeedStg2 = 3f;
+    public float maxSpeedMayhem = 5f;
+    
+    
+
+    public SpawnerControler spawner ;
 
     void Awake()
     {
@@ -44,6 +89,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+
         }
         else
         {
@@ -54,6 +101,8 @@ public class GameManager : MonoBehaviour
 
     public void DeathScreen()
     {
+        inRun = false;
+
         UIManager.Instance.DeathScreen();
         InventoryManager.Instance.FailedRun();
 
@@ -61,6 +110,7 @@ public class GameManager : MonoBehaviour
 
     public void SuccessScreen()
     {
+        inRun = false;
         UIManager.Instance.SuccessScreen();
         InventoryManager.Instance.SuccessRun();
     }
@@ -76,9 +126,16 @@ public class GameManager : MonoBehaviour
 
             if (GameTimer < warning1)
             {
-                StartPhase2();
+                // do nothing
 
             }else if(GameTimer > warning1 && GameTimer < warningMayhem){
+                StartPhase2();
+
+
+
+            }
+            else if  (GameTimer > warningMayhem)
+            {
                 StartMayhem();
             }
 
@@ -91,19 +148,25 @@ public class GameManager : MonoBehaviour
     }
 
 
+
     public void StartGame() { 
 
 
 
-        //State = GameState.Early;
         SceneManager.LoadScene("SampleScene");
 
         if (State == GameState.Menu)
         {
+            enemies.Clear();
             State = GameState.Early;
+            if (MapReloader.Instance != null)
+            {
 
+                MapReloader.Instance.Show();
+            }
             inRun = true;
         }
+
     }
 
 
@@ -114,6 +177,15 @@ public class GameManager : MonoBehaviour
         if (State == GameState.Early)
         {
             State = GameState.Mid;
+
+            spawner = SpawnerControler.Instance;
+
+            spawner.isSpawning = true;
+
+            spawner.spawnTimer = SpawnIntensity1; 
+
+            UpdateEnemySpeed(maxSpeedStg1);
+
         }
     }
 
@@ -123,6 +195,16 @@ public class GameManager : MonoBehaviour
         {
             State = GameState.Late;
         }
+
+        float t = Mathf.Clamp01(GameTimer- warningMayhem / TimeToMaxSpawn);
+
+        // Map the interpolation factor to interpolate between startValue and endValue
+        float currentValue = Mathf.Lerp(SpawnIntensity2, MaxSpawnIntensity, t);
+        float maxSpeed =  Mathf.Lerp(maxSpeedStg2,maxSpeedMayhem,t);
+
+        spawner.spawnTimer = currentValue;
+
+        UpdateEnemySpeed(maxSpeed);
     }
 
     public void BackToMenu()
@@ -131,12 +213,27 @@ public class GameManager : MonoBehaviour
 
         attempt++;
 
+        MapReloader.Instance.Hide();
+
         State = GameState.Menu;
         SceneManager.LoadScene("Menu");
 
         inRun = false;
         GameTimer = 0;
     }
+
+
+    public void UpdateEnemySpeed(float speed){
+      
+        foreach (EnemyController en in enemies){
+            en.maxSpeed =speed;
+        }
+
+    
+
+    }
+
+
 
 
 }
