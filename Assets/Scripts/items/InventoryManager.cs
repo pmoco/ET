@@ -60,15 +60,22 @@ public class InventoryManager : MonoBehaviour
 
     public  enum AllItems //ALL items in game 
     {
-        KeyCard, 
+         
 
         OfficeKey,
-        
+        ScienceLabKey,
+        StudyBoard,
+        Documentation,
+        Virus,
+        Holagram,
+        Blood,
+        Computer,
+        Capsules,
+        BrokenVent,
+        GreenSlime,
+        BrokenGreenSlime,
+        SecurityRoom,
         Camera,
-
-        jujuBeads,
-
-        Bingus,
         None
 
     }
