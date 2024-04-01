@@ -7,7 +7,7 @@ public class stunScript : MonoBehaviour
 
     private LayerMask obstacleLayer; // Layer mask for detecting obstacles
 
-
+    private  AudioSource audioSource;
 
     private void Start()
     {
@@ -23,7 +23,10 @@ public class stunScript : MonoBehaviour
             GameObject enemy =  collision.gameObject;
 
             if (IsPathClear(enemy)) enemy.GetComponent<EnemyController>().Stun()  ;
-            
+
+            audioSource = GetComponent<AudioSource>();
+
+            audioSource.Play();
 
         }
     }

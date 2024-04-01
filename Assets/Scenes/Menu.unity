@@ -1457,7 +1457,7 @@ MonoBehaviour:
   inRun: 0
   GameTimer: 0
   warning1: 60
-  warningMayhem: 180
+  warningMayhem: 120
   BackPackContent: BackPack <br>   _ Camera
   State: 0
   PopUpPrefab: {fileID: 486360988139357150, guid: 84b0af7fb60abba479b4d0e8b2a3b358, type: 3}

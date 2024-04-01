@@ -50,6 +50,10 @@ public class EnemyController : MonoBehaviour
     {
         // Find the player object using a tag
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        GetComponent<AIDestinationSetter>().target = player;
+
+
         ai =  gameObject.GetComponent<AIPath>();
         ai.maxSpeed = maxSpeed;
         anim = GetComponent<Animator>();

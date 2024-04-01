@@ -34,10 +34,27 @@ public enum FlashState
 
     public float flashTimer;
 
+    public AudioSource loopSource; // AudioSource for looped audio
+    public AudioSource oneShotSource; // AudioSource for one-shot sound effects
+
+    public AudioClip loopClip; // AudioClip for the looped audio
+    public AudioClip soundEffectClip; // AudioClip for one-shot sound effects
+
+    //private AudioSource audioSource;
+
+    //public AudioClip Camera_Flash;
+
+
+
+    //public AudioClip Footsteps;
+
+    //private bool Camera_FlashPlayed = false;
+    //private bool FootstepsPlayed = false;
 
     Rigidbody2D rb;
 
     Animator anim; 
+
 
     
         // Start is called before the first frame update
@@ -48,6 +65,8 @@ public enum FlashState
         anim = GetComponent<Animator>();
 
         flashState = FlashState.Standby;
+
+        //audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -69,9 +88,31 @@ public enum FlashState
             mousePosition.z = 0f; 
             Point (mousePosition);
 
-        }else if(flashState== FlashState.Flashing ){
+            oneShotSource.PlayOneShot(soundEffectClip);
+
+            //GetComponent<AudioSource>().Play();
+
+            //if (!Camera_FlashPlayed)
+            //{
+            //    // Assign the Camera_Flash AudioClip to the audioSource component
+            //    audioSource.clip = Camera_Flash;
+
+            //    // Play the Camera_Flash audio clip
+            //    audioSource.Play();
+
+            //    // Set Camera_FlashPlayed to true to indicate that the clip has been played
+            //    Camera_FlashPlayed = true;
+            //}
+
+            //FindObjectOfType<AudioManager>().Play("Camera_Flash");
+
+
+        }
+        else if(flashState== FlashState.Flashing ){
 
            Flash ();
+
+           
 
         }
         if (flashState== FlashState.Reloading)
@@ -79,10 +120,11 @@ public enum FlashState
             Reloading ();
         }
 
+   
 
     }
 
-    
+
     public void TakePhotoOf ( Transform  target){
         flashTimer = 0; 
         flashState = FlashState.Flashing;
@@ -119,28 +161,41 @@ public enum FlashState
             rb.velocity = movement.normalized * movSpeed;
 
 
-            
-               
-            
+            //audioSource.clip = Footsteps;
 
+            //audioSource.Play();
+
+            // Player is moving, so play or resume the looped audio
+            if (!loopSource.isPlaying)
+            {
+                loopSource.Play();
+            }
 
             if (speedY > 0)
             {
 
                 anim.SetBool("movUp", true);
                 anim.SetBool("movDown", false);
+
+     
             }
             else if (speedY < 0) 
             {
                 anim.SetBool("movUp", false);
                 anim.SetBool("movDown", true);
 
-            }else if (speedX < 0)
+        
+
+
+            }
+            else if (speedX < 0)
             {
                 anim.SetBool("movUp", false);
                 anim.SetBool("movDown", false);
                 anim.SetBool("movLeft", true);
                 anim.SetBool("movRight", false);
+
+         
             }
             else if (speedX > 0)
             {
@@ -148,6 +203,9 @@ public enum FlashState
                 anim.SetBool("movDown", false);
                 anim.SetBool("movLeft", false);
                 anim.SetBool("movRight", true);
+
+
+
             }
             else
             {
@@ -155,6 +213,9 @@ public enum FlashState
                 anim.SetBool("movDown", false);
                 anim.SetBool("movLeft", false);
                 anim.SetBool("movRight", false);
+
+                // Player is not moving, so stop the looped audio
+                loopSource.Stop();
             }
 
 
@@ -180,10 +241,14 @@ public enum FlashState
 
         if (flashTimer < flashAnimationTime ){
 
-             flash.SetActive(true);
+            flash.SetActive(true);
 
+            //audioSource = GetComponent<AudioSource>();
 
-        }else{
+            //audioSource.PlayOneShot(Camera_Flash);
+
+        }
+        else{
             flashTimer = 0;
             flashState = FlashState.Reloading ; 
             flash.SetActive(false);
