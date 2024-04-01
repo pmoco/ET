@@ -9,6 +9,32 @@ public class GameManager : MonoBehaviour
 
     public static GameManager  Instance ;
 
+    private MusicManager musicManager; // Reference to the MusicManager component
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // Get a reference to the MusicManager component
+        musicManager = FindObjectOfType<MusicManager>();
+    }
+
+    // Method to play the next track
+    public void PlayNextTrack()
+    {
+        if (musicManager != null)
+        {
+            // Determine the index of the next track
+            int nextTrackIndex = (musicManager.currentTrackIndex + 1) % musicManager.musicTracks.Length;
+            
+            // Play the next track
+            musicManager.PlayMusicTrack(nextTrackIndex);
+        }
+        else
+        {
+            Debug.LogWarning("MusicManager not found!");
+        }
+    }
+
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -53,6 +79,9 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            // Get a reference to the MusicManager component
+            musicManager = FindObjectOfType<MusicManager>();
         }
         else
         {
@@ -92,6 +121,9 @@ public class GameManager : MonoBehaviour
 
             }else if(GameTimer > warning1 && GameTimer < warningMayhem){
                 StartPhase2();
+
+
+
             }
             else if  (GameTimer > warningMayhem)
             {
@@ -105,6 +137,7 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
 
 
     public void StartGame() { 
@@ -167,6 +200,7 @@ public class GameManager : MonoBehaviour
 
 
     }
+
 
 
 }
