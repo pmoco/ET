@@ -34,7 +34,14 @@ public class UIManager : MonoBehaviour
         Instance.runScreen = runScreen; 
 
 
-        backPack.GetComponent<TMP_Text>().SetText(GameManager.Instance.BackPackContent);
+        //backPack.GetComponent<TMP_Text>().SetText(GameManager.Instance.BackPackContent);
+
+        foreach(AllItems item in InventoryManager.Instance._inventoryItems)
+        {
+
+        }
+
+
     }
 
     // Update is called once per frame
@@ -50,12 +57,18 @@ public class UIManager : MonoBehaviour
         console.Show(text);
     }
 
-    public void UpdateBackpack(AllItems item)
+    public  void ResetBackpack()
+    {
+        backPack.GetComponent<TMP_Text>().SetText("");
+    }
+
+
+    public void AddToBackpackUI(AllItems item)
 
     {
         string text = backPack.GetComponent<TMP_Text>().text;
 
-        text += "<br>   _ " + item.ToString() +  "<br>";
+        text += "<br>   _ " + item.ToString() +;
 
 
         Debug.LogWarning(text);

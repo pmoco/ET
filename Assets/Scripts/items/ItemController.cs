@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static InventoryManager;
 
 public class ItemController : MonoBehaviour
 {
@@ -21,6 +22,17 @@ public class ItemController : MonoBehaviour
 
         return InventoryManager.Instance.AddItem(itemType, toBackPack);
     
+    }
+
+    public AllItems getItemType()
+    {
+        return itemType;
+    }
+
+    public bool isOnBackpack()
+    {
+
+        return InventoryManager.Instance.hasItem(itemType);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)

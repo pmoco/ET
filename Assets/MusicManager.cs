@@ -41,6 +41,11 @@ public class MusicManager : MonoBehaviour
     // Method to play a specific music track
     public void PlayMusicTrack(int trackIndex)
     {
+        if (audioSource != null)
+        {
+            return; 
+        }
+        
         // Check if the track index is valid
         if (trackIndex >= 0 && trackIndex < musicTracks.Length)
         {

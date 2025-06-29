@@ -15,7 +15,18 @@ public class ItemPickup : ItemController
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = this.gameObject.GetComponent<AudioSource> (); 
+        audioSource = this.gameObject.GetComponent<AudioSource> ();
+
+        if (isOnBackpack()) //Adds the item to the backpack UI and removes it from the map 
+        {
+            Debug.LogWarning(ItemName + " is On backpack");
+            gameObject.SetActive(false);
+
+            if (toBackpack)
+            {
+                UIManager.Instance.AddToBackpackUI(getItemType());
+            }
+        }
     }
 
     // Update is called once per frame
@@ -24,7 +35,9 @@ public class ItemPickup : ItemController
 
         if (toDestroy && !audioSource.isPlaying )
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+
+            gameObject.SetActive ( false );
         }
 
 
@@ -44,7 +57,12 @@ public class ItemPickup : ItemController
             {
                 toDestroy = ItemDestroy;
                 gameObject.GetComponent<PopupText>().popOut();
-                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                if (gameObject.GetComponent<SpriteRenderer>() != null)
+                {
+                    gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                }
+
+                
             }
             else
             {
@@ -62,7 +80,7 @@ public class ItemPickup : ItemController
     }
 
 
-    private  void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
         // Check if the player enters the trigger area
@@ -72,7 +90,7 @@ public class ItemPickup : ItemController
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    protected override  void OnTriggerExit2D(Collider2D collision)
     {
          base.OnTriggerExit2D(collision);
 

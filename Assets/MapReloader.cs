@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 public class MapReloader : MonoBehaviour
 {
-    public static MapReloader Instance; 
+    public static MapReloader Instance;
 
     void Awake()
     {
@@ -14,17 +15,18 @@ public class MapReloader : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-               }
+        }
         else
         {
             Destroy(gameObject);
         }
     }
 
- 
-    public void  Hide()
+
+    public void Hide()
     {
         gameObject.SetActive(false);
+
 
     }
 
@@ -32,6 +34,7 @@ public class MapReloader : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
+
     }
 
 

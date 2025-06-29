@@ -11,6 +11,9 @@ public class InventoryManager : MonoBehaviour
     public  List<AllItems> _inventoryItems =  new List<AllItems>();  // Picked up Items 
     public List<AllItems> _prevItems = new List<AllItems>();
 
+   
+    //public string BackPackContent = "Backpack <br>   _ Camera";
+
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -46,7 +49,7 @@ public class InventoryManager : MonoBehaviour
 
             if (toBackPack)
             {
-                UIManager.Instance.UpdateBackpack(item);
+                UIManager.Instance.AddToBackpackUI(item);
             }
             
 

@@ -204,8 +204,6 @@ public class EnemyController : MonoBehaviour
 
 
 
-       
-        // Add attack behavior here, such as reducing player health
     }
 
     void ResetAttackCooldown()

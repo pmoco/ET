@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     public float warningMayhem = 0;
 
-    public string BackPackContent = "BackPack <br>   _ Camera";
+    
 
     public enum GameState
     {
@@ -213,7 +213,7 @@ public class GameManager : MonoBehaviour
 
         attempt++;
 
-        MapReloader.Instance.Hide();
+        //MapReloader.Instance.Hide();
 
         State = GameState.Menu;
         SceneManager.LoadScene("Menu");
